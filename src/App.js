@@ -7,10 +7,12 @@ export default class App extends Component {
 
   constructor(props, context) {
     super(props, context);
+    this.scrapePage = this.scrapePage.bind(this);
+
   
      //initial states, show is for modals, open is for the collapsers
     this.state = {
-      // userInputText = "Undefined"
+      userInputText: "No info yet"
     }
     
   }
@@ -22,6 +24,9 @@ export default class App extends Component {
         .then(
           (result) => {
             console.log(result.objects[0].text);
+            this.setState((state) => {
+              return {userInputText: result.objects[0].text}
+            });
           }
         )
   }
@@ -48,7 +53,7 @@ export default class App extends Component {
           </Button>
         </Form>
 
-        
+        <div>{this.state.userInputText}</div>
 
       </div>
     </div>
