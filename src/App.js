@@ -7,15 +7,11 @@ export default class App extends Component {
 
   constructor(props, context) {
     super(props, context);
-    // shoutout: https://github.com/AgileVentures/agile-ventures-website-react-front-end/blob/4_homepage_changes_mob/src/App.js#L26
   
-    //handlers for modal
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
      //initial states, show is for modals, open is for the collapsers
-    this.state = { 
+    this.state = {
+      // userInputText = "Undefined"
     }
-
     
   }
 
@@ -51,6 +47,8 @@ export default class App extends Component {
             Submit
           </Button>
         </Form>
+
+        <
 
       </div>
     </div>
