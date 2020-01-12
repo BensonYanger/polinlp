@@ -32,12 +32,12 @@ export default class App extends Component {
     <div className="container">
     <div className="row">
       <div className="col-lg-12 text-center">
-        <h1 className="mt-5">A Web App for Eliminating Bias</h1>
+        <h1 className="mt-5 titleColor">Unbiased</h1>
         <p className="lead">To start, enter the url of a news article</p>
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>URL</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control type="email" placeholder="Enter url" />
             <Form.Text className="text-muted">
               We will scrape the article text
             </Form.Text>
