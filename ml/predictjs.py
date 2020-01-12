@@ -25,15 +25,26 @@ def encode(text):
 
 model = keras.models.load_model("model.h5")
 
-line = sys.argv[1]
-nline = line.replace(",", "").replace(".", "").replace("()", "").replace(")", "").replace(":", "").replace("\n", " ").strip()
-encoded = encode(nline)
-encoded = keras.preprocessing.sequence.pad_sequences(
-    [encoded], value=word_index["<PAD>"], padding="post", maxlen=500)
-predict = model.predict(encoded)
-print(line)
-print(encoded)
-print(predict[0])
+def main():
+    """
+    line = sys.argv[1]
+    """
+    for line in sys.stdin:
+        if 'Exit' == line.rstrip():
+            break
+        nline = line.replace(",", "").replace(".", "").replace("()", "").replace(")", "").replace(":", "").replace("\n", " ").strip()
+        encoded = encode(nline)
+        encoded = keras.preprocessing.sequence.pad_sequences(
+            [encoded], value=word_index["<PAD>"], padding="post", maxlen=500)
+        predict = model.predict(encoded)
+            #print(line)
+        print(float(predict[0]))
+        
+    return(float(predict[0]))
+    
+
+if __name__ == "__main__":
+    main()
 
 
 """
