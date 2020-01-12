@@ -48,11 +48,44 @@ export default class App extends Component {
           </Button>
         </Form>
 
+
+      <div className="row">
+        <div className="col-lg-12 text-center">
+          <h3 className="mt-5">Your article:</h3>
+
+          <div className="card col-lg-12 topic ">
+            <h3 className="mt-2 text-center">(TOPIC)</h3>
+          </div>
+
+          <div className="card col-lg-12 bias neutral">
+            <h3 className="mt-2">(BIAS)</h3>
+          </div>
+        </div>
+
+        <div className="col-lg-12 text-center">
+          <h3 className="mt-5">Our article:</h3>
+
+          <div className="card col-lg-12 topic ">
+            <h3 className="mt-2 text-center">(TOPIC)</h3>
+          </div>
+
+          <div className="card col-lg-12 bias neutral">
+            <h3 className="mt-2">(BIAS)</h3>
+          </div>
+        </div>
+
+
+        
+
+
+      </div>
         
 
       </div>
     </div>
   </div>
+
+
   );
 }
 
