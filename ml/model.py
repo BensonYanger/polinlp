@@ -28,7 +28,8 @@ def decode(text):
 model = keras.Sequential()
 model.add(keras.layers.Embedding(44000, 32))
 model.add(keras.layers.GlobalAveragePooling1D())
-#model.add(keras.layers.LSTM(64, return_sequences=True))
+#model.add(keras.layers.LSTM(32, return_sequences=True))
+#model.add(keras.layers.Dropout(0.2))
 model.add(keras.layers.Dense(32, activation="relu"))
 model.add(keras.layers.Dense(1, activation="sigmoid"))
 
