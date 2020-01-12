@@ -26,11 +26,10 @@ def decode(text):
 
 # model
 model = keras.Sequential()
-model.add(keras.layers.Embedding(44000, 16))
+model.add(keras.layers.Embedding(44000, 32))
 model.add(keras.layers.GlobalAveragePooling1D())
-# model.add(keras.layers.LSTM(16, return_sequences=True))
-model.add(keras.layers.Dropout(0.2))
-model.add(keras.layers.Dense(16, activation="relu"))
+#model.add(keras.layers.LSTM(64, return_sequences=True))
+model.add(keras.layers.Dense(32, activation="relu"))
 model.add(keras.layers.Dense(1, activation="sigmoid"))
 
 model.summary()
@@ -43,7 +42,7 @@ x_train = train_data[10000:]
 y_val = train_labels[:10000]
 y_train = train_labels[10000:]
 
-fitModel = model.fit(x_train, y_train, epochs=30, batch_size=512, validation_data=(x_val, y_val), verbose=1)
+fitModel = model.fit(x_train, y_train, epochs=40, batch_size=512, validation_data=(x_val, y_val), verbose=1)
 
 results = model.evaluate(test_data, test_labels, verbose=1)
 
