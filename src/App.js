@@ -8,22 +8,27 @@ export default class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.scrapePage = this.scrapePage.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
-  
-     //initial states, show is for modals, open is for the collapsers
     this.state = {
-      userInputText: "No info yet"
+      userInputText: "No info yet",
+      userArticle: ""
     }
     
   }
 
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value});
+  }
+
   scrapePage() {
     console.log("scrape out")
-    fetch("https://api.diffbot.com/v3/article?token=b7fd8288de04076dd92b31bb7cb9d857&url=https://www.washingtonpost.com/opinions/dont-let-doma-fool-you--the-supreme-court-is-restricting-your-rights/2013/06/28/cd0afa1c-de85-11e2-b94a-452948b95ca8_story.html")
+    fetch("https://api.diffbot.com/v3/article?token=b7fd8288de04076dd92b31bb7cb9d857&url=" + this.state.userArticle)
         .then(res => res.json())
         .then(
           (result) => {
-            console.log(result.objects[0].text);
+            // console.log(result.objects[0].text);
+            // console.log(this.state.userArticle)
             this.setState((state) => {
               return {userInputText: result.objects[0].text}
             });
@@ -42,7 +47,7 @@ export default class App extends Component {
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>URL</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control name="userArticle" value={this.state.userArticle} onChange={this.handleChange} placeholder="News Article" />
             <Form.Text className="text-muted">
               We will scrape the article text
             </Form.Text>
