@@ -3,55 +3,6 @@ import {Form, Button} from 'react-bootstrap';
 import './App.css';
 
 
-let request = require('request');
-let https = require('https');
-let subscriptionKey = "9520ea125c71429e80daf1e765e5552e";
-let host = "unbiased-nwhacks2020.cognitiveservices.azure.com"
-let path = '/bing/v7.0/news/search';
- let term = 'trump'
-
- let response_handler = function (response) {
-  let body = '';
-  response.on('data', function (d) {
-      body += d;
-  });
-  response.on('end', function () {
-      console.log('\nRelevant Headers:\n');
-      for (var header in response.headers)
-          // header keys are lower-cased by Node.js
-          if (header.startsWith("bingapis-") || header.startsWith("x-msedge-"))
-               console.log(header + ": " + response.headers[header]);
-      body = JSON.stringify(JSON.parse(body), null, '  ');
-    //   for (var article in body) {
-    //     console.log(article);
-    // }
-      // console.log('\nJSON Response:\n');
-      // console.log(body);
-      console.log(typeof body);
-  });
-  response.on('error', function (e) {
-      console.log('Error: ' + e.message);
-  });
-};
-
-let bing_news_search = function (search) {
-console.log('Searching news for: ' + term);
-let request_params = {
-      method : 'GET',
-      hostname : host,
-      path : path + '?q=' + encodeURIComponent(search),
-      headers : {
-          'Ocp-Apim-Subscription-Key' : subscriptionKey,
-      }
-  };
-
-  let req = https.request(request_params, response_handler);
-  req.end();
-}
-bing_news_search(term);
-
-
-
 export default class App extends Component {
   
   constructor(props, context) {
@@ -61,7 +12,9 @@ export default class App extends Component {
 
     this.state = {
       userInputText: "No info yet",
-      userArticle: ""
+      userArticle: "",
+      links: [],
+      term: "trump"
     }
     
   }
@@ -83,12 +36,62 @@ export default class App extends Component {
             // console.log(result.objects[0].text);
             // console.log(this.state.userArticle)
             this.setState((state) => {
-              return {userInputText: result.objects[0].text}
+              // console.log(result)
+              // console.log(result.objects[0].title)
+              this.fetchResults(result.objects[0].title);
+
+              return {userInputText: result.objects[0].text, term: result.objects[0].title}
+              
             });
           }
         )
+    // console.log("title updated" + this.state.term + this.state.userInputText)
     element.scrollIntoView({behavior: "smooth"});
-    
+  }
+
+  fetchResults(str) {
+    let https = require('https');
+    let subscriptionKey = "9520ea125c71429e80daf1e765e5552e";
+    let host = "unbiased-nwhacks2020.cognitiveservices.azure.com"
+    let path = '/bing/v7.0/news/search';
+
+    let response_handler = (response) => {
+      let body = '';
+      response.on('data', function (d) {
+          body += d;
+      });
+      response.on('end', () => {
+          for (var header in response.headers)
+              // header keys are lower-cased by Node.js
+              if (header.startsWith("bingapis-") || header.startsWith("x-msedge-"))
+                  console.log(header + ": " + response.headers[header]);
+          var values = JSON.parse(body).value;
+          const urls = values.map(x => x.url + "\n");
+          this.setState((prevState) => ({
+            links: [...prevState.links, ...urls]
+          }));
+      });
+      response.on('error', function (e) {
+          console.log('Error: ' + e.message);
+      });
+    };
+
+    let bing_news_search = (search) => {
+    let request_params = {
+          method : 'GET',
+          hostname : host,
+          path : path + '?q=' + encodeURIComponent(search) + '&count=30',
+          headers : {
+              'Ocp-Apim-Subscription-Key' : subscriptionKey,
+          },
+      };
+
+      let req = https.request(request_params, response_handler);
+      req.end();
+    }
+
+    bing_news_search(str);
+
   }
 
   render() {
@@ -119,6 +122,10 @@ export default class App extends Component {
           <Button variant="primary" onClick={this.scrapePage}>
             Submit
           </Button>
+          <Button variant="primary" onClick={this.fetchResults}>
+            Submit
+          </Button>
+   
         </Form>
 
         <div>{this.state.userInputText}</div>
@@ -137,7 +144,7 @@ export default class App extends Component {
         </div>
 
         <div className="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
+        <input type="range" min="1" max="100" value="50" className="slider" id="myRange" readOnly={true} />
         </div>
 
         <div className="col-lg-12 text-center">
@@ -152,9 +159,12 @@ export default class App extends Component {
           </div>
         </div>
 
-
-        
-
+        <div className="col-lg-12 text-center">
+        <h3 className="mt-5">Other links</h3>
+        <div>{this.state.links.map(link => (
+            <li key={link}>{link}</li>
+          ))}</div>
+        </div>
 
       </div>
         
