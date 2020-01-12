@@ -29,13 +29,20 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.myPredict();
+    this.myPredict("Liberal")
+    
   }
 
-  async myPredict() {
-    // const model = await tf.loadLayersModel('C:/Users/Sean/polinp/ml/js/model.json');
+
+
+
+  async myPredict(str) {
+    var encode = require( 'hashcode' ).hashCode;
     const model = await tf.loadLayersModel('https://bensonyang.com/js/model.json');
-    let res = model.predict(tf.tensor1d([1, 0 , 1, 1, 0, 0 , 1 , 0, 1]));
+    let split = str.split(" ")
+    split = encode().value(split); 
+    console.log(split)
+    let res = model.predict(tf.tensor1d([split]));
     console.log(res)
   }
 
