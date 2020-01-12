@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import './App.css';
-
+import * as tf from '@tensorflow/tfjs';
 
 export default class App extends Component {
   
@@ -28,7 +28,40 @@ export default class App extends Component {
     this.setState({ [event.target.name]: event.target.value});
   }
 
-  
+  componentDidMount() {
+    this.myPredict("Liberal")
+    
+  }
+
+
+  async myPredict(str) {
+    var encode = require( 'hashcode' ).hashCode;
+    const model = await tf.loadLayersModel('https://bensonyang.com/js/model.json');
+    let split = str.split(" ")
+    split = encode().value(split); 
+    console.log(split)
+    let res = model.predict(tf.tensor1d([split]));
+    console.log(res)
+  }
+
+  guess(num) {
+    const c = "Centric";
+    const sr = "Slight Right Bias"
+    const r = "Right Bias";
+    const sl = "Slight Left Bias"
+    const l = "Left Bias";
+    if (num < 25) {
+      return l
+    } else if (num > 25 && num < 40) {
+      return sl
+    } else if (num > 40 && num < 60) {
+      return c
+    } else if (num > 60 && num < 75) {
+      return sr 
+    } else {
+      return r
+    }
+  }
 
   scrapePage() {
     var element = document.getElementById("result");
@@ -44,7 +77,7 @@ export default class App extends Component {
               // console.log(result)
               // console.log(result.objects[0].title)
               this.fetchResults(result.objects[0].title);
-
+              
               return {userInputText: result.objects[0].text, term: result.objects[0].title, biasUser: Math.random() * 100,
               bias1: Math.random() * 100, bias2: Math.random() * 100}
               
@@ -86,7 +119,7 @@ export default class App extends Component {
     let request_params = {
           method : 'GET',
           hostname : host,
-          path : path + '?q=' + encodeURIComponent(search) + '&count=30',
+          path : path + '?q=' + encodeURIComponent(search) + '&count=50',
           headers : {
               'Ocp-Apim-Subscription-Key' : subscriptionKey,
           },
@@ -101,7 +134,7 @@ export default class App extends Component {
   }
 
   render() {
-    
+
 
   return (
     // 
@@ -131,12 +164,12 @@ export default class App extends Component {
         <div className="col-lg-12 text-center" id="result">
           <h3 className="" style={{marginBottom: "1rem"}}>Your article:</h3>
 
-          <div className="card col-lg-12 topic">
-            <h3 className="mt-2 text-center">{this.state.userArticle}</h3>
+          <div className="card col-lg-12 topic ">
+            <h3 className="mt-2 text-center"><a href={this.state.userArticle}>{this.state.userArticle}</a></h3>
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">{this.state.biasUser}</h3>
+            <h3 className="mt-2">{this.guess(this.state.biasUser)}</h3>
           </div>
         </div>
 
@@ -148,11 +181,11 @@ export default class App extends Component {
           <h3 className="mt-5" style={{marginBottom: "1rem"}}>Our suggested reading:</h3>
 
           <div className="card col-lg-12 topic ">
-            <h3 className="mt-2 text-center">{this.state.links[1]}</h3>
+          <h3 className="mt-2 text-center"><a href={this.state.links[1]}>{this.state.links[1]}</a></h3>
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">{this.state.bias1}</h3>
+            <h3 className="mt-2">{this.guess(this.state.bias1)}</h3>
           </div>
         </div>
 
@@ -164,11 +197,11 @@ export default class App extends Component {
           <h3 className="mt-5" style={{marginBottom: "1rem"}}>Our suggested reading:</h3>
 
           <div className="card col-lg-12 topic ">
-            <h3 className="mt-2 text-center">{this.state.links[2]}</h3>
+            <h3 className="mt-2 text-center"><a href={this.state.links[2]}>{this.state.links[2]}</a></h3>
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">{this.state.bias2}</h3>
+            <h3 className="mt-2">{this.guess(this.state.bias2)}</h3>
           </div>
         </div>
 
@@ -179,7 +212,7 @@ export default class App extends Component {
         <div className="col-lg-12 text-center">
         <h3 className="mt-5">Other links:</h3>
         <div>{this.state.links.map(link => (
-            <li key={link}>{link}</li>
+            <li key={link}><a href={link}>{link}</a></li>
           ))}</div>
         </div>
 
