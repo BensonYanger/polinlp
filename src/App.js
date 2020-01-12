@@ -14,7 +14,12 @@ export default class App extends Component {
       userInputText: "No info yet",
       userArticle: "",
       links: [],
-      term: "trump"
+      term: "trump",
+      biasUser: 50,
+      bias1: 50,
+      bias2: 50,
+      bias3: 50,
+      bias4: 50
     }
     
   }
@@ -95,14 +100,7 @@ export default class App extends Component {
   }
 
   render() {
-    // var slider = document.getElementById("myRange");
-    // var output = document.getElementById("demo");
-    // output.innerHTML = slider.value; // Display the default slider value
     
-    // // Update the current slider value (each time you drag the slider handle)
-    // slider.oninput = function() {
-    //   output.innerHTML = this.value;
-    // }
 
   return (
     <div className="container">
@@ -122,9 +120,7 @@ export default class App extends Component {
           <Button variant="primary" onClick={this.scrapePage}>
             Submit
           </Button>
-          <Button variant="primary" onClick={this.fetchResults}>
-            Submit
-          </Button>
+    
    
         </Form>
 
@@ -157,6 +153,10 @@ export default class App extends Component {
           <div className="card col-lg-12 bias neutral">
             <h3 className="mt-2">(BIAS)</h3>
           </div>
+        </div>
+
+        <div className="slidecontainer">
+        <input type="range" min="1" max="100" value="50" className="slider" id="myRange" readOnly={true} />
         </div>
 
         <div className="col-lg-12 text-center">
