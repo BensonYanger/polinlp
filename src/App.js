@@ -42,7 +42,7 @@ export default class App extends Component {
     <div className="container">
     <div className="row">
       <div className="col-lg-12 text-center">
-        <h1 className="mt-5">A Web App for Eliminating Bias</h1>
+        <h1 className="mt-5 titleColor">Unbiased</h1>
         <p className="lead">To start, enter the url of a news article</p>
         <Form>
           <Form.Group controlId="formBasicEmail">
@@ -60,9 +60,43 @@ export default class App extends Component {
 
         <div>{this.state.userInputText}</div>
 
+      <div className="row">
+        <div className="col-lg-12 text-center">
+          <h3 className="mt-5">Your article:</h3>
+
+          <div className="card col-lg-12 topic ">
+            <h3 className="mt-2 text-center">(TOPIC)</h3>
+          </div>
+
+          <div className="card col-lg-12 bias neutral">
+            <h3 className="mt-2">(BIAS)</h3>
+          </div>
+        </div>
+
+        <div className="col-lg-12 text-center">
+          <h3 className="mt-5">Our article:</h3>
+
+          <div className="card col-lg-12 topic ">
+            <h3 className="mt-2 text-center">(TOPIC)</h3>
+          </div>
+
+          <div className="card col-lg-12 bias neutral">
+            <h3 className="mt-2">(BIAS)</h3>
+          </div>
+        </div>
+
+
+        
+
+
+      </div>
+        
+
       </div>
     </div>
   </div>
+
+
   );
 }
 

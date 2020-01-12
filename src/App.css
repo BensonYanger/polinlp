@@ -10035,4 +10035,33 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+
+.bias {
+  padding: 1rem;
+}
+
+.topic {
+  padding: 1rem;
+  background-color: #ffcccc;
+  text-decoration: underline;
+
+}
+
+.right-bias {
+  color: #007bff;
+}
+
+.left-bias {
+  color: red;
+}
+
+.neutral {
+  color: #33cc33;
+}
+
+.titleColor{
+  color: #DA52A3;
+}
+
 /*# sourceMappingURL=bootstrap.css.map */
