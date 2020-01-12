@@ -34,8 +34,6 @@ export default class App extends Component {
   }
 
 
-
-
   async myPredict(str) {
     var encode = require( 'hashcode' ).hashCode;
     const model = await tf.loadLayersModel('https://bensonyang.com/js/model.json');
@@ -44,6 +42,25 @@ export default class App extends Component {
     console.log(split)
     let res = model.predict(tf.tensor1d([split]));
     console.log(res)
+  }
+
+  guess(num) {
+    const c = "Centric";
+    const sr = "Slight Right Bias"
+    const r = "Right Bias";
+    const sl = "Slight Left Bias"
+    const l = "Left Bias";
+    if (num < 25) {
+      return l
+    } else if (num > 25 && num < 40) {
+      return sl
+    } else if (num > 40 && num < 60) {
+      return c
+    } else if (num > 60 && num < 75) {
+      return sr 
+    } else {
+      return r
+    }
   }
 
   scrapePage() {
@@ -60,7 +77,7 @@ export default class App extends Component {
               // console.log(result)
               // console.log(result.objects[0].title)
               this.fetchResults(result.objects[0].title);
-
+              
               return {userInputText: result.objects[0].text, term: result.objects[0].title, biasUser: Math.random() * 100,
               bias1: Math.random() * 100, bias2: Math.random() * 100}
               
@@ -117,7 +134,7 @@ export default class App extends Component {
   }
 
   render() {
-    
+
 
   return (
     <div className="container">
@@ -152,7 +169,7 @@ export default class App extends Component {
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">{this.state.biasUser}</h3>
+            <h3 className="mt-2">{this.guess(this.state.biasUser)}</h3>
           </div>
         </div>
 
@@ -168,7 +185,7 @@ export default class App extends Component {
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">{this.state.bias1}</h3>
+            <h3 className="mt-2">{this.guess(this.state.bias1)}</h3>
           </div>
         </div>
 
@@ -184,7 +201,7 @@ export default class App extends Component {
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">{this.state.bias2}</h3>
+            <h3 className="mt-2">{this.guess(this.state.bias2)}</h3>
           </div>
         </div>
 
