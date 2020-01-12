@@ -16,8 +16,8 @@ export default class App extends Component {
       links: [],
       term: "trump",
       biasUser: 50,
-      bias1: 50,
-      bias2: 50,
+      bias1: 75,
+      bias2: 25,
       bias3: 50,
       bias4: 50
     }
@@ -45,7 +45,8 @@ export default class App extends Component {
               // console.log(result.objects[0].title)
               this.fetchResults(result.objects[0].title);
 
-              return {userInputText: result.objects[0].text, term: result.objects[0].title}
+              return {userInputText: result.objects[0].text, term: result.objects[0].title, biasUser: Math.random() * 100,
+              bias1: Math.random() * 100, bias2: Math.random() * 100}
               
             });
           }
@@ -131,32 +132,48 @@ export default class App extends Component {
           <h3 className="">Your article:</h3>
 
           <div className="card col-lg-12 topic ">
-            <h3 className="mt-2 text-center">(TOPIC)</h3>
+            <h3 className="mt-2 text-center">{this.state.userArticle}</h3>
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">(BIAS)</h3>
+            <h3 className="mt-2">{this.state.biasUser}</h3>
           </div>
         </div>
 
         <div className="slidecontainer">
-        <input type="range" min="1" max="100" value="50" className="slider" id="myRange" readOnly={true} />
+        <input type="range" min="1" max="100" value={this.state.biasUser} className="slider" id="myRange" readOnly={true} />
         </div>
 
         <div className="col-lg-12 text-center">
           <h3 className="mt-5">Our suggested reading:</h3>
 
           <div className="card col-lg-12 topic ">
-            <h3 className="mt-2 text-center">(TOPIC)</h3>
+            <h3 className="mt-2 text-center">{this.state.links[1]}</h3>
           </div>
 
           <div className="card col-lg-12 bias neutral">
-            <h3 className="mt-2">(BIAS)</h3>
+            <h3 className="mt-2">{this.state.bias1}</h3>
           </div>
         </div>
 
         <div className="slidecontainer">
-        <input type="range" min="1" max="100" value="50" className="slider" id="myRange" readOnly={true} />
+        <input type="range" min="1" max="100" value={this.state.bias1} className="slider" id="myRange" readOnly={true} />
+        </div>
+
+        <div className="col-lg-12 text-center">
+          <h3 className="mt-5">Our suggested reading:</h3>
+
+          <div className="card col-lg-12 topic ">
+            <h3 className="mt-2 text-center">{this.state.links[2]}</h3>
+          </div>
+
+          <div className="card col-lg-12 bias neutral">
+            <h3 className="mt-2">{this.state.bias2}</h3>
+          </div>
+        </div>
+
+        <div className="slidecontainer">
+        <input type="range" min="1" max="100" value={this.state.bias2} className="slider" id="myRange" readOnly={true} />
         </div>
 
         <div className="col-lg-12 text-center">
