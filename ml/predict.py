@@ -26,7 +26,7 @@ model = keras.models.load_model("model.h5")
 
 with open("test.txt", encoding="utf-8") as f:
     for line in f.readlines():
-        nline = line.replace(",", "").replace(".", "").replace("()", "").replace(")", "").replace(":", "").strip()
+        nline = line.replace(",", "").replace(".", "").replace("()", "").replace(")", "").replace(":", "").replace("\n", " ").strip()
         encoded = encode(nline)
         encoded = keras.preprocessing.sequence.pad_sequences(
             [encoded], value=word_index["<PAD>"], padding="post", maxlen=500)
