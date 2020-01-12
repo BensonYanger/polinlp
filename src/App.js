@@ -104,34 +104,34 @@ export default class App extends Component {
     
 
   return (
-    <div className="container">
+    // 
+    <div className="container whitespace">
+
     <div className="row">
       <div className="col-lg-12 text-center">
-        <h1 className="mt-5 titleColor">Unbiased</h1>
-        <p className="lead">To start, enter the url of a news article</p>
+        <img src="logo.png"></img>
         <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>URL</Form.Label>
-            <Form.Control name="userArticle" value={this.state.userArticle} onChange={this.handleChange} placeholder="News Article" />
+          <Form.Group controlId="formBasicEmail" style={{margin: "1em"}}>
+            <Form.Label>To start, enter the url of a news article</Form.Label>
+            <Form.Control name="userArticle" value={this.state.userArticle} onChange={this.handleChange} placeholder="URL of News Article" />
             <Form.Text className="text-muted">
               We will scrape the article text
             </Form.Text>
           </Form.Group>
 
-          <Button variant="primary" onClick={this.scrapePage}>
+          <Button variant="primary" onClick={this.scrapePage} style={{margin: "1em"}}>
             Submit
           </Button>
     
    
         </Form>
 
-        <div>{this.state.userInputText}</div>
 
       <div className="row" style={{marginTop: '150vh', marginBottom:'50vh'}}>
         <div className="col-lg-12 text-center" id="result">
-          <h3 className="">Your article:</h3>
+          <h3 className="" style={{marginBottom: "1rem"}}>Your article:</h3>
 
-          <div className="card col-lg-12 topic ">
+          <div className="card col-lg-12 topic">
             <h3 className="mt-2 text-center">{this.state.userArticle}</h3>
           </div>
 
@@ -140,12 +140,12 @@ export default class App extends Component {
           </div>
         </div>
 
-        <div className="slidecontainer">
+        <div className="slidecontainer" style={{marginBottom: "2rem"}}>
         <input type="range" min="1" max="100" value={this.state.biasUser} className="slider" id="myRange" readOnly={true} />
         </div>
 
-        <div className="col-lg-12 text-center">
-          <h3 className="mt-5">Our suggested reading:</h3>
+        <div className="col-lg-12 text-center mt3">
+          <h3 className="mt-5" style={{marginBottom: "1rem"}}>Our suggested reading:</h3>
 
           <div className="card col-lg-12 topic ">
             <h3 className="mt-2 text-center">{this.state.links[1]}</h3>
@@ -156,12 +156,12 @@ export default class App extends Component {
           </div>
         </div>
 
-        <div className="slidecontainer">
+        <div className="slidecontainer" style={{marginBottom: "2rem"}}>
         <input type="range" min="1" max="100" value={this.state.bias1} className="slider" id="myRange" readOnly={true} />
         </div>
 
         <div className="col-lg-12 text-center">
-          <h3 className="mt-5">Our suggested reading:</h3>
+          <h3 className="mt-5" style={{marginBottom: "1rem"}}>Our suggested reading:</h3>
 
           <div className="card col-lg-12 topic ">
             <h3 className="mt-2 text-center">{this.state.links[2]}</h3>
@@ -172,12 +172,12 @@ export default class App extends Component {
           </div>
         </div>
 
-        <div className="slidecontainer">
+        <div className="slidecontainer" style={{marginBottom: "2rem"}}>
         <input type="range" min="1" max="100" value={this.state.bias2} className="slider" id="myRange" readOnly={true} />
         </div>
 
         <div className="col-lg-12 text-center">
-        <h3 className="mt-5">Other links</h3>
+        <h3 className="mt-5">Other links:</h3>
         <div>{this.state.links.map(link => (
             <li key={link}>{link}</li>
           ))}</div>

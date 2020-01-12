@@ -10104,3 +10104,7 @@ a.text-dark:hover, a.text-dark:focus {
   background: #4CAF50; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+
+.whitespace {
+  margin-top: 6rem;
+}
